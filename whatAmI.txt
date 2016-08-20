@@ -21,32 +21,9 @@ scripting/commands available basically emulate a secretary (so like a boss askin
 schedule a meeting at the best time, or to give a time/date for "dentist appointment", or questions
 like those above)
 
-personal goals on this project are to become more comfortable with a language such as ruby, python
-(not java or c++ because those tools do not fit the productivity/ease/flexibility desires and I
-would strongly guess that a underlying scripting functionality would be harder to establish)
-
-while the end product intends to have a formidable technological backing and general power it will
-undergo serious iterative building...from a product you'd see from a project from a intro to
-programming student to the final product (for example, the calendar itself will go from a simple
-array to a MySQL db)
-	-in the interest of gratification and to fill the void of lack of faith/experience I want
-	user functionality early in the process without having to progidy-level digest things like
-	MySQL+Python tutorials
-
-most importantly I need to have a functional product under my belt to solve a lot of psychological
-problems surrounding my programming at the moment
-
-one of the greatest struggles (that I may tackle completely, slightly, or eventually ignore) is
-documentation...i would prefer to simply ignore documentation but this seems a huge miss in terms of
-client usability because the tool is so powerful and in so many ways vague/hidden/unlike most
-things...it is also one of the most widely appealing of my current projects..and documentation will
-also improve its value in a portfolio
-
 technology(most will be ignored early in the interest of early functionality and the cost of lots of
 recoding and backtracking):
-MySql
-Python (choosing python over ruby because it is a little more explicit, more comfortable for me
-	starting)
+
 <SomeGUI>
 Linux (it may be possible to avoid a platform lock by exposing python to the user instead of
 	communicating with the linux shell - but this seems a huge overkill as a tool to communicate
