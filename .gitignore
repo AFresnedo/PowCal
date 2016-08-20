@@ -1,2 +1,7 @@
 #ignore vim session
 *.vim
+#ignore first 4 swap files created by vim
+*.swp
+*.swo
+*.swq
+*.swr
