@@ -15,11 +15,6 @@ Created by AFresnedo for use with the PowCal Calendar module
 
 import re #for regex used in storing appointments
 
-# TODO design issue: the client using Day must understand vague string format, oop design would prefer that 
-#   using Day with a more general time format would work and that Day would handle its implementation 
-#   specific time conversions to store and manipulate
-#   note: a possible fix for this is to have a intermediary..but that'll simply be a bandaid to
-#   fulfill OOP design at the cost of optimization
 class Day:
     "A class storing appointments for one day."
     noApp = 'noAppointment_00h0q_23h3q' #time duration is not accurate unless no apps in day
@@ -45,15 +40,14 @@ class Day:
             for i in range(firstIndex, indexReached + 1):
                 self.sch[i] = Day.noApp
 
-    #pre: name of appointment(s)
+    #pre: name of appointment(s), default returns open times
     #post: returns list of strings of appointment(s) in name+start+end format
     def getTime(self, appName = 'noAppointment'):
         #check precondition
-        p = re.compile('[a-zA-Z]+')
-        assert p.match(appName)
+        verNameForm(appName)
         #get list of appointments with the passed name
         listApp = []
-        p = re.compile(appName + '_')
+        p = re.compile(appName + '_') #'_' to force whole word match
         lastMatch = Day.noApp
         for e in self.sch:
             if (p.match(e)):
@@ -72,10 +66,9 @@ class Day:
 
     #pre: time of appointment in special string format
     #post: returns full special string of appointment including name+start+end
-    def getName(self, time = '_00h0q'):
+    def getName(self, time = ''):
         #check precondition
-        p = re.compile('_[0-2][0-9]h[0-3]q')
-        assert p.match(time) 
+        verTimeForm(time)
         #get string
         index = self.conToInd(time)
         string = self.sch[index]
@@ -85,10 +78,9 @@ class Day:
 
     #pre: name of appointment
     #post: removes all appointments scheduled with that name
-    def delApp(self, appName = 'noAppointment_00h0q_23h3q'):
+    def delApp(self, appName = ''):
         #check precondition
-        p = re.compile('[a-zA-Z]+')
-        assert p.match(appName)
+        verNameForm(appName)
         #replace all matches with noApp string
         p = re.compile(appName + '_')
         for i in range(0, len(self.sch) - 1):
@@ -99,30 +91,61 @@ class Day:
     def clearTime(self, time = '_24h1q'):
         None
 
-    "A method to convert the string version of a start or end time to an index for Day's list."
-    def conToInd(self, time = '_12h2q'):
-        #compile the regex pattern to search with
-        p = re.compile('\d+') #any number
+    #pre: a valid time in proper format
+    #post: returns corresponding index
+    def conToInd(self, time = ''):
+        "A method to convert the string version of a start or end time to an index for Day's list."
+        #check precondition
+        verTimeForm(time)
+        #extract number of hours and number of quarter hours
+        p = re.compile('\d+') 
         values = p.findall(time) #get 2 element list [hour, quarter]
         index = 4*int(values[0]) + int(values[1]) #calculate index using hour and quarter
         assert 0<=index<len(self.sch)
         return index
 
-def verStrForm(string = ''):
-    "A function to verify format of string used in Day's list of appointments."
-    p = re.compile('[a-zA-Z]+_[0-2][0-9]h[0-3]q_[0-2][0-9]h[0-3]q')
-    assert p.match(string)
+'''
+Helper Functions
+'''
 
 #current implementation of UDT Day in day.py requires interval to be a multiple of 0.25
 interval = 0.25 #smallest unit of time is a quarter hour written as 0.25
 
 #pre: appName is a single word, start and end are multiples of interval
-#post: returns values in string format for day.Day
-def conToStr(day = None, appName = 'noAppointment', start = 0.00, end = 24.00):
-    #TODO check preconditions: appName is just a word, start and end are multiples of interval
-    assert(day is !None)
+#post: returns values in string format for Day
+def conToStr(appName = '0invalidName', start = -1.00, end = -1.00):
+    #check preconditions
+    verNameForm(appName)
+    #TODO check preconditions: start and end are non-negative multiples of interval
     end = end - interval #convert end time to beginning of last interval of time
     fStr = appName + start + end
+
+def conTimeToStr(time = 0.00):
+    assert(False) #TODO multiple of 0.25
+
+def verStrForm(string = ''):
+    "A function to verify format of string used in Day's list of appointments."
+    pIs = re.compile('[a-zA-Z]+_[0-2][0-9]h[0-3]q_[0-2][0-9]h[0-3]q')
+    pNot = re.compile('[a-zA-Z]+_2[4-9]h[0-3]q_2[4-9]h[0-3]q')
+    assert pIs.match(string)
+    assert not pNot.match(string)
+
+def verNameForm(name = ''):
+    "A function to verify the format of name in a Day compliant string."
+    p = re.compile('^[a-zA-Z]+$')
+    assert p.match(name)
+
+def verTimeForm(time = ''):
+    "A function to verify the format of time in a Day compliant string."
+    pIs = re.compile('^_[0-2][0-9]h[0-3]q$')
+    pNot = re.compile('^_2[4-9]h[0-3]q$')
+    assert pIs.match(time)
+    assert not pNot.match(time)
+
+
+'''
+Exceptions
+'''
 
 class PreventOverride(Exception):
     "An exception class to prevent previous appointments from being overriden."
