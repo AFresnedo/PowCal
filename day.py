@@ -108,20 +108,32 @@ class Day:
 Helper Functions
 '''
 
-#current implementation of UDT Day in day.py requires interval to be a multiple of 0.25
-interval = 0.25 #smallest unit of time is a quarter hour written as 0.25
+#current implementation of UDT Day requires interval to be a multiple of 0.25
+tStep = 0.25 #smallest unit of time is a quarter hour written as 0.25
 
-#pre: appName is a single word, start and end are multiples of interval
+#pre: appName is a single word, start and end are multiples of tStep
 #post: returns values in string format for Day
 def conToStr(appName = '0invalidName', start = -1.00, end = -1.00):
     #check preconditions
     verNameForm(appName)
-    #TODO check preconditions: start and end are non-negative multiples of interval
-    end = end - interval #convert end time to beginning of last interval of time
-    fStr = appName + start + end
+    assert (start >= 0 and end >= tStep)
+    assert ((start % tStep == 0) and (end % tStep == 0))
+    #adjust end time to match proper format
+    end = end - tStep 
+    #convert times to string format and return complete string
+    start = conTimeToStr(start)
+    end = conTimeToStr(end)
+    return convertedString = appName + start + end
 
-def conTimeToStr(time = 0.00):
-    assert(False) #TODO multiple of 0.25
+#pre: time is a non-negative multiple of tStep
+#post: return time in valid string format
+def conTimeToStr(time = -1.00):
+    #check preconditions
+    assert time >= 0
+    assert time % tStep == 0
+    #convert time to valid string format
+    #divide time by 4 and round to the lowest int and store as hours
+    #get remainder of time/4, divide by 0.25, and store as quarter hours
 
 def verStrForm(string = ''):
     "A function to verify format of string used in Day's list of appointments."
