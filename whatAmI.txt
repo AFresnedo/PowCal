@@ -1,0 +1,61 @@
+PowCal is a calendar program that is built to be extremely hackable through a scripting
+language...kind of a programmer's dream tool..it should also have some sort of analyitcal
+tooling/intelligence to mimic/extend scheduling behavior that is similar to ToMeet
+
+the benefits of PowCal is that using a programmar's mindset you don't need to edit every entry
+independently instead you can use stuff like RegExp to perform batch-type changes or the intelligence
+toolset it provides to get information about your life after it has enough data on it (how many
+hours are you excercising per week? are you using all your vacation days this year? how often are
+you sick? how many hours per week do you spend with your girlfriend?)
+
+-how many hours of work do you have left to schedule? (in the instance that you are a freelancer
+trying to fill 80 hours of freelance work per week, or some hybrid)
+
+-scripting new alerts (the intelligence behind this is how smart the program is at looking at the
+database and understanding the objects within...like what is a doctors appointments versus playing
+ball with sunny besides the fact that they are both events scheduled) or using/extending some of the
+basic built-in alerts
+
+a keen way of looking at the program from a power client's point of view is that the
+scripting/commands available basically emulate a secretary (so like a boss asking his secretary to
+schedule a meeting at the best time, or to give a time/date for "dentist appointment", or questions
+like those above)
+
+personal goals on this project are to become more comfortable with a language such as ruby, python
+(not java or c++ because those tools do not fit the productivity/ease/flexibility desires and I
+would strongly guess that a underlying scripting functionality would be harder to establish)
+
+while the end product intends to have a formidable technological backing and general power it will
+undergo serious iterative building...from a product you'd see from a project from a intro to
+programming student to the final product (for example, the calendar itself will go from a simple
+array to a MySQL db)
+	-in the interest of gratification and to fill the void of lack of faith/experience I want
+	user functionality early in the process without having to progidy-level digest things like
+	MySQL+Python tutorials
+
+most importantly I need to have a functional product under my belt to solve a lot of psychological
+problems surrounding my programming at the moment
+
+one of the greatest struggles (that I may tackle completely, slightly, or eventually ignore) is
+documentation...i would prefer to simply ignore documentation but this seems a huge miss in terms of
+client usability because the tool is so powerful and in so many ways vague/hidden/unlike most
+things...it is also one of the most widely appealing of my current projects..and documentation will
+also improve its value in a portfolio
+
+technology(most will be ignored early in the interest of early functionality and the cost of lots of
+recoding and backtracking):
+MySql
+Python (choosing python over ruby because it is a little more explicit, more comfortable for me
+	starting)
+<SomeGUI>
+Linux (it may be possible to avoid a platform lock by exposing python to the user instead of
+	communicating with the linux shell - but this seems a huge overkill as a tool to communicate
+	with the calendar and more work on the GUI because little chance of the GUI work being platform
+	independent first time through) - probably lots of other complications during development as
+	well
+	-this project is small enough that simply rebuilding it as a platform independent version is
+	a worthwhile goal at a later date...it seems to be something that is unnecessary now and would only
+	prevent main goals from being achieved (great risk little reward, plus reward can be claimed later
+	regardless)
+	-for now the linux shell will provide access for the user to use and communicate with the
+	calendar
