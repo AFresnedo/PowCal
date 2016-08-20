@@ -5,3 +5,6 @@
 *.swo
 *.swq
 *.swr
+
+#ignore compiled python code
+*.pyc
