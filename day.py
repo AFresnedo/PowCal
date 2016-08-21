@@ -116,6 +116,7 @@ tStep = 0.25 #smallest unit of time is a quarter hour written as 0.25
 def conToStr(appName = '0invalidName', start = -1.00, end = -1.00):
     #check preconditions
     verNameForm(appName)
+    assert start < end
     assert (start >= 0 and end >= tStep)
     assert ((start % tStep == 0) and (end % tStep == 0))
     #adjust end time to match proper format
@@ -123,18 +124,30 @@ def conToStr(appName = '0invalidName', start = -1.00, end = -1.00):
     #convert times to string format and return complete string
     start = conTimeToStr(start)
     end = conTimeToStr(end)
-    return convertedString = appName + start + end
+    convertedString = appName + start + end
+    return convertedString 
 
-#pre: time is a non-negative multiple of tStep
+#pre: time is a non-negative multiple of tStep and within a day's time
 #post: return time in valid string format
 def conTimeToStr(time = -1.00):
     #check preconditions
     assert time >= 0
     assert time % tStep == 0
-    #convert time to valid string format
-    #divide time by 4 and round to the lowest int and store as hours
-    #get remainder of time/4, divide by 0.25, and store as quarter hours
+    assert time <= 23.75
+    #convert time to string format 
+    h = int(time) #extract hours
+    if h < 10:
+        hours = '_0' + str(h) 
+    else:
+        hours = '_' + str(h)
+    q = (time - h) / tStep #extract quarter hours
+    q = int(q)
+    timeString = hours + 'h' + str(q) + 'q'
+    #check string format and return
+    return timeString 
 
+#pre: a valid string used for storing Day's appointments in a list
+#post: nothing unless string is invalid, in which case assert triggers
 def verStrForm(string = ''):
     "A function to verify format of string used in Day's list of appointments."
     pIs = re.compile('[a-zA-Z]+_[0-2][0-9]h[0-3]q_[0-2][0-9]h[0-3]q')
@@ -142,11 +155,15 @@ def verStrForm(string = ''):
     assert pIs.match(string)
     assert not pNot.match(string)
 
+#pre: a single word
+#post: nothing unless string is invalid, in which case assert triggers
 def verNameForm(name = ''):
     "A function to verify the format of name in a Day compliant string."
     p = re.compile('^[a-zA-Z]+$')
     assert p.match(name)
 
+#pre: a valid string representation of a valid time used in Day
+#post: nothing unless string is invalid, in which case assert triggers
 def verTimeForm(time = ''):
     "A function to verify the format of time in a Day compliant string."
     pIs = re.compile('^_[0-2][0-9]h[0-3]q$')
@@ -159,6 +176,7 @@ def verTimeForm(time = ''):
 Exceptions
 '''
 
+#exception to be thrown when an appointment is attempted to be overriden in Day
 class PreventOverride(Exception):
     "An exception class to prevent previous appointments from being overriden."
     def __init__(self, toAddIn = '', toOverride = ''):

@@ -120,3 +120,22 @@ class VerStrFormTestCase(unittest.TestCase):
         #following tests will trigger assert as intended if decommented
         #day.verStrForm(self.brokenString) 
         #day.verStrForm(self.wrongTime)
+
+class ClientHelperFuncTestCase(unittest.TestCase):
+    def setUp(self):
+        self.timeA = 0.25
+        self.timeB = 3 #(-3 failed as expected)
+        self.timeC = 23.00 #(25.00 failed as expected)
+        self.timeD = 22.25
+        self.timeE = 12.00
+        self.appA = ['dentist', 11.00, 12.50]
+        self.appB = ['doctor', 0.00, 10.00]
+    
+    def test_conToStr(self):
+        print day.conTimeToStr(self.timeA)
+        print day.conTimeToStr(self.timeB)
+        print day.conTimeToStr(self.timeC)
+        print day.conTimeToStr(self.timeD)
+        print day.conTimeToStr(self.timeE)
+        print day.conToStr(self.appA[0], self.appA[1], self.appA[2])
+        print day.conToStr(self.appB[0], self.appB[1], self.appB[2])
