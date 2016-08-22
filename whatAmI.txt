@@ -36,3 +36,12 @@ Linux (it may be possible to avoid a platform lock by exposing python to the use
 	regardless)
 	-for now the linux shell will provide access for the user to use and communicate with the
 	calendar
+
+pow questions:
+how many appointments scheduled in (date, days months or years)
+how many dentist appointments
+how many hours of video games
+how many free hours
+how many hours left to fill with work
+how many vacations days per year, how many left
+how many hours of exercise per week, how many per day on avg?
