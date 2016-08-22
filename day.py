@@ -10,7 +10,7 @@ correctly by the client.
 A note on the special string format, the last time value indicates the start of the final quarter
 hour of the appointment.
 
-Created by AFresnedo for use with the PowCal Calendar module
+Created by AFresnedo for use with the Cal module in the PowCal project.
 """
 
 import re #for regex used in storing appointments
