@@ -10,18 +10,18 @@ Created by AFresnedo for use with the Day module and Pow module in the PowCal pr
 class Cal:
     "A singleton calendar storing appointments and their info for a client to view and manipulate."
     def __init__(self, year = 2016):
-        appTable = appTable()
-        appTree = appTree(2016)
+        appTable = AppTable()
+        appTree = AppTree(2016)
 
     def append(self, time = -1.00):
         None #add information to an appointment to allow for double+ booking or fixing
 
-#TODO i'm thinking appTreeNode and appTreeMultiNode
-class appTree:
+#TODO i'm thinking AppTreeNode and AppTreeMultiNode
+class AppTree:
     "Tree beginning with a year root, holding month nodes, holding day nodes, holding Day UDT."
     def __init__(self, year = 2016):
         self.year = 2016
-        self.root = appTreeDay('year', year)
+        self.root = AppTreeDay('year', year)
     
     #post: return reference to appropriate Day UDT
     def getDay(self, date):
@@ -40,8 +40,8 @@ class appTree:
         #   methods that will be used by calendar for information like "does this month have any
         #   appointments scheduled?" stuff like checking strucutre should not be done here
 
-class appTreeNode:
-    "A day in appTree holding its date and its links."
+class AppTreeNode:
+    "A day in AppTree holding its date and its links."
     def __init__(self, parent = None, date = -1, child = None):
         self.parent = parent
         self.date = date
@@ -49,33 +49,40 @@ class appTreeNode:
     
     #TODO: determine if pass by reference is what is wanted here...depends if I want client to have
     #   access to interworking of the tree from just getting a parent of a node, make this class
-    #   private? that avoids issues since it's okay for appTree to manipulate nodes
+    #   private? that avoids issues since it's okay for AppTree to manipulate nodes
     #post: returns ref to month node
     def getParent(self):
-        return self.month
+        return self.parent
 
     def getSelf(self):
-        return self.day
+        return self.date
     
     def getChild(self):
         return self.child
 
-class appTreeMultiNode(appTreeNode):
-    "The root, a year, or a month in appTree holding their dates and links."
+class AppTreeMultiNode(AppTreeNode):
+    "The root, a year, or a month in AppTree holding their dates and links."
     def __init__(self, parent = None, date = -1, child = None):
+        self.parent = parent
+        self.date = date
+        self.childL = [child]
+
+    def getChild(self):
+        assert(False)
         None
-    def getDay(self, day = -1):
+
+    def getChild(self, date = -1):
         #TODO asserts, nicer if/else and return
-        for d in self.dayL:
-            if d.getDay is day:
-                return d
+        for c in self.dayL:
+            if c.getSelf is date:
+                return c
             else:
                 return -1
     
 #hash based on unique year/month/day...and starting hour?
-class appTable:
+class AppTable:
     def __init__(self):
         None
 
-class appInfo:
+class AppInfo:
     None
