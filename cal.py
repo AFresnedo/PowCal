@@ -18,15 +18,37 @@ class Cal:
 
 class AppTree:
     "Tree beginning with a root, linking to month nodes, linking to day nodes, which are holding Day UDTs."
-    def __init__(self, year = 2016):
-        self.root = AppTreeMultiNode(None, year, None, root)
+    def __init__(self):
+        self.root = AppTreeMultiNode(None, None, None, root)
     
+    #pre: date is a list of the form [4 digit int, 2 digit int, 2 digit int]
     #post: return reference to appropriate Day UDT
     def getDay(self, date):
-        None
+        #base case, self is an AppTreeNode also known as an AppTree node that is holding a day date
+        if self.child isInstance(Day()):
+            return self.child
+        #move onto child that matches and then call its getDay method to advance down the tree
+        else:
+            nodeType = self.ident
+            if nodeType is root:
+                match = date[0]
+                for c in self.child:
+                    if self.child.date is match:
+                        self.child.getDay(date)
+            elif nodeType is year:
+                match = date[1]
+                for c in self.child:
+                    if self.child.date is match:
+                        self.child.getDay(date)
+            elif nodeType is month:
+                match = date[2]
+                for c in self.child:
+                    if self.child.date is match:
+                        self.child.getDay(date)
+            else:
+                assert(False) #TODO change to exception of no match found
 
-    def trav(self, node, date):
-        None
+    #TODO maybe create a traversal private method to refactor code if possible
 
     #post: adds Day UDT to tree
     def addDay(self):
@@ -63,7 +85,7 @@ class AppTreeMultiNode(AppTreeNode):
     def __init__(self, parent = None, date = -1, child = None, ident = ident):
         self.parent = parent
         self.date = date
-        self.childL = [child]
+        self.child = [child]
         self.ident = ident
 
     def getChild(self):
@@ -72,7 +94,7 @@ class AppTreeMultiNode(AppTreeNode):
 
     def getChild(self, date = -1):
         #TODO asserts, nicer if/else and return
-        for c in self.childL:
+        for c in self.child:
             if c.getSelf is date:
                 return c
             else:
@@ -81,7 +103,7 @@ class AppTreeMultiNode(AppTreeNode):
     def addChild(self, date = -1):
         #TODO assert child doesn't exist already and date is valid
         #create all of child's links
-        self.childL.append(child)
+        self.child.append(child)
     
 #hash based on unique year/month/day...and starting hour?
 class AppTable:
