@@ -16,12 +16,10 @@ class Cal:
     def append(self, time = -1.00):
         None #add information to an appointment to allow for double+ booking or fixing
 
-#TODO i'm thinking AppTreeNode and AppTreeMultiNode
 class AppTree:
-    "Tree beginning with a year root, holding month nodes, holding day nodes, holding Day UDT."
+    "Tree beginning with a root, linking to month nodes, linking to day nodes, which are holding Day UDTs."
     def __init__(self, year = 2016):
-        self.year = 2016
-        self.root = AppTreeDay('year', year)
+        self.root = AppTreeMultiNode(None, year, None, root)
     
     #post: return reference to appropriate Day UDT
     def getDay(self, date):
@@ -62,10 +60,11 @@ class AppTreeNode:
 
 class AppTreeMultiNode(AppTreeNode):
     "The root, a year, or a month in AppTree holding their dates and links."
-    def __init__(self, parent = None, date = -1, child = None):
+    def __init__(self, parent = None, date = -1, child = None, ident = ident):
         self.parent = parent
         self.date = date
         self.childL = [child]
+        self.ident = ident
 
     def getChild(self):
         assert(False)
@@ -73,11 +72,16 @@ class AppTreeMultiNode(AppTreeNode):
 
     def getChild(self, date = -1):
         #TODO asserts, nicer if/else and return
-        for c in self.dayL:
+        for c in self.childL:
             if c.getSelf is date:
                 return c
             else:
                 return -1
+
+    def addChild(self, date = -1):
+        #TODO assert child doesn't exist already and date is valid
+        #create all of child's links
+        self.childL.append(child)
     
 #hash based on unique year/month/day...and starting hour?
 class AppTable:
