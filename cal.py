@@ -48,8 +48,6 @@ class AppTree:
             else:
                 assert(False) #TODO change to exception of no match found
 
-    #TODO maybe create a traversal private method to refactor code if possible
-
     #post: adds Day UDT to tree
     def addDay(self):
         None
@@ -60,9 +58,47 @@ class AppTree:
         #   methods that will be used by calendar for information like "does this month have any
         #   appointments scheduled?" stuff like checking strucutre should not be done here
 
+    #pre: target is a valid date
+    #post: returns node if found, otherwise exception is thrown
+    def traverseTo(self, target = [-1111, -11, -11]):
+        #check preconditions
+        #base case
+        if self.date = target:
+            return self
+        #target doesn't exist, raise TargetNotFound
+        elif self.child is None: #end of tree branch, no leaf
+            raise Exception()
+        #reached end of tree without finding target, traversal or structural error
+        elif isinstance(self.child, day.Day): 
+            assert False
+        #move to next node on way to target
+        else:
+            nextTarget = []
+            #determine how far traveled
+            i = 0
+            while self.date[i] == target[i]:
+                nextTarget.append[target[i]]
+                i+=1 
+            nextTarget.append[target[i]]
+            #complete identify of next target
+            while 0 < i < 3:
+                nextTarget.append[-11]
+                i+=1
+            #goto next target
+            for c in self.childL: 
+                if c.date == nextTarget:
+                    c.traverseTo(target)
+                    break
+            else:
+                assert False
+
+    #post: returns smallest time unit of target's branch
+    def traverseUntil(self, target = [-1111, -11, -11]):
+        None
+
 class AppTreeNode:
     "A day in AppTree holding its date and its links."
-    def __init__(self, parent = None, date = -1, child = None):
+    def __init__(self, parent = None, date = [-1111, -11, -11], child = None):
         self.parent = parent
         self.date = date
         self.child = day.Day()
@@ -82,7 +118,7 @@ class AppTreeNode:
 
 class AppTreeMultiNode(AppTreeNode):
     "The root, a year, or a month in AppTree holding their dates and links."
-    def __init__(self, parent = None, date = -1, child = None, ident = ident):
+    def __init__(self, parent = None, date = [-1111, -11, -11], child = None, ident = ident):
         self.parent = parent
         self.date = date
         self.child = [child]
