@@ -176,6 +176,7 @@ def verTimeForm(time = ''):
 Exceptions
 '''
 
+#TODO add message comparing passed obj to obj being overriden
 #exception to be thrown when an appointment is attempted to be overriden in Day
 class PreventOverride(Exception):
     "An exception class to prevent previous appointments from being overriden."

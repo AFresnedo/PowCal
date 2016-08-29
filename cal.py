@@ -16,10 +16,11 @@ class Cal:
     def append(self, time = -1.00):
         None #add information to an appointment to allow for double+ booking or fixing
 
+#TODO change implementation of dates to something cleaner to use while traversing
 class AppTree:
     "Tree beginning with a root, linking to month nodes, linking to day nodes, which are holding Day UDTs."
     def __init__(self):
-        self.root = AppTreeMultiNode(None, None, None, root)
+        self.root = AppTreeMultiNode([-1111, -11, -11], None, None)
     
     #pre: date is a list of the form [4 digit int, 2 digit int, 2 digit int]
     #post: return reference to appropriate Day UDT
@@ -29,46 +30,63 @@ class AppTree:
             return self.child
         #move onto child that matches and then call its getDay method to advance down the tree
         else:
-            nodeType = self.ident
-            if nodeType is root:
+            #current node is root
+            if self.date[0] = -1111
                 match = date[0]
                 for c in self.child:
-                    if self.child.date is match:
+                    if self.child.date[0] is match:
                         self.child.getDay(date)
-            elif nodeType is year:
+                        break
+                else:
+                    assert False #TODO change to exception of no match found
+            #current node is year
+            elif self.date[1] = -11
                 match = date[1]
                 for c in self.child:
-                    if self.child.date is match:
+                    if self.child.date[1] is match:
                         self.child.getDay(date)
-            elif nodeType is month:
+                        break
+                else:
+                    assert False #TODO change to exception of no match found
+            #current node is month
+            elif self.date[2] = -11
                 match = date[2]
                 for c in self.child:
-                    if self.child.date is match:
+                    if self.child.date[2] is match:
                         self.child.getDay(date)
+                        break
+                else:
+                    assert False #TODO change to exception of no match found
             else:
-                assert(False) #TODO change to exception of no match found
+                assert False #TODO change to exception of no match found
 
     #post: adds Day UDT to tree
-    def addDay(self):
-        None
-        #recursive?
-        #check for month: goto or add and goto
-        #check for day: goto or add and goto
-        #is this method too damn big? trying to do too much? yes, absolutely! needs to use
-        #   methods that will be used by calendar for information like "does this month have any
-        #   appointments scheduled?" stuff like checking strucutre should not be done here
+    def addDay(self, target = [-1111, -11, -11]):
+        currentNode = traverseUntil(target)
+        if currentNode.date == target:
+            #day node already created, ensure day object holding hours exists
+            assert isinstance(currentNode.child, day.Day)
+            #raise exception since day already added
+            raise day.PreventOverride()
+        if currentNode[0] = -1111:
+            #add year, month, and day to root
+            yearNode = AppTreeMultiNode(self, [target[0], -11, -11])
+            self.childL.append(
+        elif currentNode.date[1] = -11:
+            None #add month and day to existing year
+        elif currentNode.date[2] = -11:
+            None #add day to existing month
+        else:
+            assert False
 
     #pre: target is a valid date
-    #post: returns node if found, otherwise exception is thrown
-    def traverseTo(self, target = [-1111, -11, -11]):
+    #post: returns node if found, otherwise the last node on the partial path to where it would be
+    def traverseUntil(self, target = [-1111, -11, -11]):
         #check preconditions
         #base case
         if self.date = target:
             return self
-        #target doesn't exist, raise TargetNotFound
-        elif self.child is None: #end of tree branch, no leaf
-            raise Exception()
-        #reached end of tree without finding target, traversal or structural error
+        #reached end of complete tree branch without finding target: algorithm or structural error
         elif isinstance(self.child, day.Day): 
             assert False
         #move to next node on way to target
@@ -84,21 +102,17 @@ class AppTree:
             while 0 < i < 3:
                 nextTarget.append[-11]
                 i+=1
-            #goto next target
+            #goto next target, else return self because child doesn't exist
             for c in self.childL: 
                 if c.date == nextTarget:
                     c.traverseTo(target)
                     break
             else:
-                assert False
-
-    #post: returns smallest time unit of target's branch
-    def traverseUntil(self, target = [-1111, -11, -11]):
-        None
+                return self
 
 class AppTreeNode:
     "A day in AppTree holding its date and its links."
-    def __init__(self, parent = None, date = [-1111, -11, -11], child = None):
+    def __init__(self, date = [-1111, -11, -11], parent = None, child = None):
         self.parent = parent
         self.date = date
         self.child = day.Day()
@@ -118,11 +132,10 @@ class AppTreeNode:
 
 class AppTreeMultiNode(AppTreeNode):
     "The root, a year, or a month in AppTree holding their dates and links."
-    def __init__(self, parent = None, date = [-1111, -11, -11], child = None, ident = ident):
+    def __init__(self, date = [-1111, -11, -11], parent = None, child = None):
         self.parent = parent
         self.date = date
         self.child = [child]
-        self.ident = ident
 
     def getChild(self):
         assert(False)
