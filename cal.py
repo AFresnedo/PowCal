@@ -48,7 +48,6 @@ class AppTree:
                         break
                 else:
                     assert False #TODO change to exception of no match found
-            #TODO testing
             #current node is month
             elif self.date[2] == -11:
                 match = date[2]
@@ -71,22 +70,23 @@ class AppTree:
             assert isinstance(currentNode.child, day.Day)
             #raise exception since day already added
             raise day.PreventOverride()
+        #TODO refactor
         #add leaf to tree, creating missing nodes in branch as needed
         if currentNode[0] == -1111:
             #add year, month, and day to root 
             dayNode = AppTreeMultiNode(self, [target[0], target[1], target[2]])
             monthNode = AppTreeMultiNode(self, [target[0], target[1], -11], dayNode)
             yearNode = AppTreeMultiNode(self, [target[0], -11, -11], monthNode)
-            self.childL.append(yearNode)
+            self.child.append(yearNode)
         elif currentNode.date[1] == -11:
             #add month and day to existing year
             dayNode = AppTreeMultiNode(self, [target[0], target[1], target[2]])
             monthNode = AppTreeMultiNode(self, [target[0], target[1], -11], dayNode)
-            self.childL.append(monthNode)
+            self.child.append(monthNode)
         elif currentNode.date[2] == -11:
             #add day to existing month
             dayNode = AppTreeMultiNode(self, [target[0], target[1], target[2]])
-            self.childL.append(dayNode)
+            self.child.append(dayNode)
         else:
             assert False
 
@@ -114,7 +114,7 @@ class AppTree:
                 nextTarget.append[-11]
                 i+=1
             #goto next target, else return self because child doesn't exist
-            for c in self.childL: 
+            for c in self.child: 
                 if c.date == nextTarget:
                     c.traverseTo(target)
                     break
