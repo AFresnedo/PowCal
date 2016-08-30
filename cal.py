@@ -26,12 +26,12 @@ class AppTree:
     #post: return reference to appropriate Day UDT
     def getDay(self, date):
         #base case, self is an AppTreeNode also known as an AppTree node that is holding a day date
-        if self.child isInstance(Day()):
+        if isinstance(self.child, day.Day):
             return self.child
         #move onto child that matches and then call its getDay method to advance down the tree
         else:
             #current node is root
-            if self.date[0] = -1111
+            if self.date[0] == -1111:
                 match = date[0]
                 for c in self.child:
                     if self.child.date[0] is match:
@@ -40,7 +40,7 @@ class AppTree:
                 else:
                     assert False #TODO change to exception of no match found
             #current node is year
-            elif self.date[1] = -11
+            elif self.date[1] == -11:
                 match = date[1]
                 for c in self.child:
                     if self.child.date[1] is match:
@@ -49,7 +49,7 @@ class AppTree:
                 else:
                     assert False #TODO change to exception of no match found
             #current node is month
-            elif self.date[2] = -11
+            elif self.date[2] == -11:
                 match = date[2]
                 for c in self.child:
                     if self.child.date[2] is match:
@@ -62,20 +62,30 @@ class AppTree:
 
     #post: adds Day UDT to tree
     def addDay(self, target = [-1111, -11, -11]):
+        #go as far down appropriate branch as possible
         currentNode = traverseUntil(target)
+        #check if it is correct to add day to this branch
         if currentNode.date == target:
             #day node already created, ensure day object holding hours exists
             assert isinstance(currentNode.child, day.Day)
             #raise exception since day already added
             raise day.PreventOverride()
-        if currentNode[0] = -1111:
-            #add year, month, and day to root
-            yearNode = AppTreeMultiNode(self, [target[0], -11, -11])
-            self.childL.append(
-        elif currentNode.date[1] = -11:
-            None #add month and day to existing year
-        elif currentNode.date[2] = -11:
-            None #add day to existing month
+        #add leaf to tree, creating missing nodes in branch as needed
+        if currentNode[0] == -1111:
+            #add year, month, and day to root 
+            dayNode = AppTreeMultiNode(self, [target[0], target[1], target[2]])
+            monthNode = AppTreeMultiNode(self, [target[0], target[1], -11], dayNode)
+            yearNode = AppTreeMultiNode(self, [target[0], -11, -11], monthNode)
+            self.childL.append(yearNode)
+        elif currentNode.date[1] == -11:
+            #add month and day to existing year
+            dayNode = AppTreeMultiNode(self, [target[0], target[1], target[2]])
+            monthNode = AppTreeMultiNode(self, [target[0], target[1], -11], dayNode)
+            self.childL.append(monthNode)
+        elif currentNode.date[2] == -11:
+            #add day to existing month
+            dayNode = AppTreeMultiNode(self, [target[0], target[1], target[2]])
+            self.childL.append(dayNode)
         else:
             assert False
 
@@ -84,7 +94,7 @@ class AppTree:
     def traverseUntil(self, target = [-1111, -11, -11]):
         #check preconditions
         #base case
-        if self.date = target:
+        if self.date == target:
             return self
         #reached end of complete tree branch without finding target: algorithm or structural error
         elif isinstance(self.child, day.Day): 
@@ -112,18 +122,10 @@ class AppTree:
 
 class AppTreeNode:
     "A day in AppTree holding its date and its links."
-    def __init__(self, date = [-1111, -11, -11], parent = None, child = None):
-        self.parent = parent
+    def __init__(self, date = [-1111, -11, -11], child = None):
         self.date = date
         self.child = day.Day()
     
-    #TODO: determine if pass by reference is what is wanted here...depends if I want client to have
-    #   access to interworking of the tree from just getting a parent of a node, make this class
-    #   private? that avoids issues since it's okay for AppTree to manipulate nodes
-    #post: returns ref to month node
-    def getParent(self):
-        return self.parent
-
     def getSelf(self):
         return self.date
     
@@ -132,8 +134,7 @@ class AppTreeNode:
 
 class AppTreeMultiNode(AppTreeNode):
     "The root, a year, or a month in AppTree holding their dates and links."
-    def __init__(self, date = [-1111, -11, -11], parent = None, child = None):
-        self.parent = parent
+    def __init__(self, date = [-1111, -11, -11], child = None):
         self.date = date
         self.child = [child]
 
