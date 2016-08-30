@@ -48,6 +48,7 @@ class AppTree:
                         break
                 else:
                     assert False #TODO change to exception of no match found
+            #TODO testing
             #current node is month
             elif self.date[2] == -11:
                 match = date[2]
