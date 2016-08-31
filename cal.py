@@ -26,17 +26,19 @@ class AppTree:
     
     #pre: date is a list of the form [4 digit int, 2 digit int, 2 digit int]
     #post: return reference to appropriate Day UDT
-    def getDay(self, node, date):
+    def getDay(self, date, node = None):
+        if node is None:
+            node = self.root
         #base case, current node is day
         if isinstance(node.child, day.Day):
             return node.child
         #move onto child that matches and then call its getDay method to advance down the tree
         else:
-            if self.date[0] == -1111:
+            if node.date[0] == -1111:
                 #current node is root
                 match = date[0]
                 for c in node.child:
-                    if self.child.date[0] is match:
+                    if c.date[0] is match:
                         node.child.getDay(date)
                         break
                 else:
@@ -45,7 +47,7 @@ class AppTree:
                 #current node is year
                 match = date[1]
                 for c in node.child:
-                    if node.child.date[1] is match:
+                    if c.date[1] is match:
                         node.child.getDay(date)
                         break
                 else:
