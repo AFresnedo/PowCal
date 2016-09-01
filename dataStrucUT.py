@@ -3,7 +3,7 @@ Module for running unit tests for cal.py in the PowCal project.
 """
 
 import unittest #python's unit test library
-import calV2 #to perform unit tests on
+import dataStruc #to perform unit tests on
 import day
 
 class DataStrucTestCase(unittest.TestCase):

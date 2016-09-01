@@ -6,6 +6,10 @@ Created by AFresnedo for use with the Day module and Cal module in the PowCal pr
 
 import day #for Day object, holds appointments
 
+"""
+Tree Data Structure
+"""
+
 class AppTreeNode:
     "A node holding a date in AppTree."
     def __init__(self, date = [-1111, -11, -11], child = []):
@@ -83,3 +87,14 @@ class AppTree:
                 add = False
         if add:
             parent.child.append(toAdd)
+
+"""
+Dictionary
+"""
+#the key is the date and the value is the day.Day() UDT
+
+"""
+Shared Resources
+"""
+class DateNotFound(Exception):
+    None
