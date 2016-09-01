@@ -89,9 +89,33 @@ class AppTree:
             parent.child.append(toAdd)
 
 """
-Dictionary
+Map Data Structure
 """
-#the key is the date and the value is the day.Day() UDT
+
+class AppMap():
+    "A class storing (key, val) pairs of (appointment date, unique text file)."
+    def __init__(self):
+        self.appDict = {}
+    
+    #key format: noAppointment_00h0q_23h3q
+    def addApp(self, key):
+        f = self.createFile(key)
+        self.appDict[key] = f
+
+    def getApp(self):
+        None
+
+    def delApp(self):
+        None
+
+    def createFile(self, key):
+        f = open(key + '.txt', 'w')
+        #TODO fill in the blanks using the key
+        f.write('Appointment name:\n')
+        f.write('Start time:\n')
+        f.write('End time:\n')
+        f.close()
+        return f
 
 """
 Shared Resources

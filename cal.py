@@ -18,3 +18,6 @@ class Cal:
 
     def append(self, time = -1.00):
         None #add information to an appointment to allow for double+ booking or fixing
+
+#TODO make sure adding an appointment adds it to both the tree and the map, likewise deleting.
+#   this is important so that using the date & hours as a key will always result in unique keys

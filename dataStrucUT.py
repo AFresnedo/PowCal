@@ -1,12 +1,12 @@
 """
-Module for running unit tests for cal.py in the PowCal project.
+Module for running unit tests for dataStruc.py in the PowCal project.
 """
 
 import unittest #python's unit test library
 import dataStruc #to perform unit tests on
 import day
 
-class DataStrucTestCase(unittest.TestCase):
+class AppTreeTestCase(unittest.TestCase):
     def setUp(self):
         #create empty tree
         self.emptyT = dataStruc.AppTree()
@@ -27,3 +27,14 @@ class DataStrucTestCase(unittest.TestCase):
         #check dayTwo is a Day obj
         dayTwo = self.twoT.getHrs(2016, 07, 31)
         assert isinstance(dayTwo, day.Day)
+
+class AppMapTestCase(unittest.TestCase):
+    def setUp(self):
+        #create empty map
+        self.emptyM = dataStruc.AppMap()
+
+    def test_add(self):
+        self.emptyM.addApp('noAppointment_00h0q_23h3q')
+        for key in self.emptyM.appDict:
+            print key
+            print self.emptyM.appDict[key]
