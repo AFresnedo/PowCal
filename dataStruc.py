@@ -117,6 +117,7 @@ class AppMap():
         f.write('Date:\n')
         f.write('Start time:\n')
         f.write('End time:\n')
+        f.write('Type:\n'
         f.close()
         return f
 

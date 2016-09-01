@@ -3,7 +3,7 @@ language...kind of a programmer's dream tool..it should also have some sort of a
 tooling/intelligence to mimic/extend scheduling behavior that is similar to ToMeet
 
 the benefits of PowCal is that using a programmar's mindset you don't need to edit every entry
-independently instead you can use stuff like RegExp to perform batch-type changes or the intelligence
+independently instead you can build commands using Pow module to perform batch-type changes or the intelligence
 toolset it provides to get information about your life after it has enough data on it (how many
 hours are you excercising per week? are you using all your vacation days this year? how often are
 you sick? how many hours per week do you spend with your girlfriend?)
