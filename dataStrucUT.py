@@ -33,8 +33,19 @@ class AppMapTestCase(unittest.TestCase):
         #create empty map
         self.emptyM = dataStruc.AppMap()
 
+        #create map with one appointment
+        self.oneM = dataStruc.AppMap()
+        self.oneM.addApp('dentist_12h0q_14h0q_01_09_9999')
+
+    def tearDown(self):
+        self.oneM.delApp('dentist_12h0q_14h0q_01_09_9999')
+
     def test_add(self):
-        self.emptyM.addApp('noAppointment_00h0q_23h3q')
+        self.emptyM.addApp('noAppointment_00h0q_23h3q_31_12_9999')
         for key in self.emptyM.appDict:
             print key
             print self.emptyM.appDict[key]
+        self.emptyM.delApp('noAppointment_00h0q_23h3q_31_12_9999')
+
+    def test_getAppInfo(self):
+        print self.oneM.getAppInfo('dentist_12h0q_14h0q_01_09_9999')

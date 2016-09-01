@@ -5,6 +5,7 @@ Created by AFresnedo for use with the Day module and Cal module in the PowCal pr
 """
 
 import day #for Day object, holds appointments
+import os #for deleting files
 
 """
 Tree Data Structure
@@ -97,21 +98,23 @@ class AppMap():
     def __init__(self):
         self.appDict = {}
     
-    #key format: noAppointment_00h0q_23h3q
+    #key format: noAppointment_00h0q_23h3q_31_12_9999
     def addApp(self, key):
         f = self.createFile(key)
         self.appDict[key] = f
 
-    def getApp(self):
-        None
+    def getAppInfo(self, key):
+        return self.appDict[key]
 
-    def delApp(self):
-        None
+    def delApp(self, key):
+        os.remove(key + '.txt')
+        del self.appDict[key] 
 
     def createFile(self, key):
-        f = open(key + '.txt', 'w')
+        f = open(key + '.txt', 'a')
         #TODO fill in the blanks using the key
         f.write('Appointment name:\n')
+        f.write('Date:\n')
         f.write('Start time:\n')
         f.write('End time:\n')
         f.close()
