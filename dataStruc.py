@@ -1,9 +1,7 @@
 """
-This module is intended to manage a calendar using Day UDTs. The calendar is designed to provide
-enough information to the client to answer most questions a human could ask and answer of a calendar
-full of appointments.
+This module is designed to store appointments for the cal module in both tree and hashtable formats.
 
-Created by AFresnedo for use with the Day module and Pow module in the PowCal project.
+Created by AFresnedo for use with the Day module and Cal module in the PowCal project.
 """
 
 import day #for Day object, holds appointments
@@ -85,5 +83,3 @@ class AppTree:
                 add = False
         if add:
             parent.child.append(toAdd)
-
-
