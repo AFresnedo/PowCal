@@ -1,7 +1,9 @@
 """
-This module is designed to store appointments for the cal module in both tree and hashtable formats.
+This module is designed to store appointments for the cal module in both tree
+and hashtable formats.
 
-Created by AFresnedo for use with the Day module and Cal module in the PowCal project.
+Created by AFresnedo for use with the Day module and Cal module in the PowCal
+project.
 """
 
 import day #for Day object, holds appointments
@@ -21,7 +23,7 @@ class AppTree:
     "A tree holding AppTreeNodes."
     def __init__(self):
         self.root = AppTreeNode()
-    
+
     def addYear(self, year):
         date = [year, -11, -11]
         toAdd = AppTreeNode(date)
@@ -97,7 +99,7 @@ class AppMap():
     "A class storing (key, val) pairs of (appointment date, unique text file)."
     def __init__(self):
         self.appDict = {}
-    
+
     #key format: noAppointment_00h0q_23h3q_31_12_9999
     def addApp(self, key):
         f = self.createFile(key)
@@ -108,7 +110,7 @@ class AppMap():
 
     def delApp(self, key):
         os.remove(key + '.txt')
-        del self.appDict[key] 
+        del self.appDict[key]
 
     def createFile(self, key):
         f = open(key + '.txt', 'a')
@@ -117,7 +119,7 @@ class AppMap():
         f.write('Date:\n')
         f.write('Start time:\n')
         f.write('End time:\n')
-        f.write('Type:\n'
+        f.write('Type:\n')
         f.close()
         return f
 

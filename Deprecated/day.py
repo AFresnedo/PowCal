@@ -1,17 +1,18 @@
-"""
-This module is designed to store scheduling appointments over the course of one <full> day in
-<quarter hour> intervals. The object created is able to accept an appointment with a start time and
-end time. If the appointment given does not conflict with another appointment it will be stored,
-otherwise it will instead return the name of the conflicting appointment. A function is also
-provided to convert from string to index. In this module's first iteration a
-appointmentName_hourNumber_quarterHourNumber string is used for all operations and must be used
-correctly by the client.
+# TODO check that the following is a docstring for the module even though
+# import after
+""" This module is designed to store scheduling appointments over the course of
+one <full> day in <quarter hour> intervals. The object created is able to
+accept an appointment with a start time and end time. If the appointment given
+does not conflict with another appointment it will be stored, otherwise it will
+instead return the name of the conflicting appointment. A function is also
+provided to convert from string to index. In this module's first iteration
+a appointmentName_hourNumber_quarterHourNumber string is used for all
+operations and must be used correctly by the client.
 
-A note on the special string format, the last time value indicates the start of the final quarter
-hour of the appointment.
+A note on the special string format, the last time value indicates the start of
+the final quarter hour of the appointment.
 
-Created by AFresnedo for use with the Cal module in the PowCal project.
-"""
+Created by AFresnedo for use with the Cal module in the PowCal project.  """
 
 import re #for regex used in storing appointments
 
@@ -24,7 +25,7 @@ class Day:
     def add(self, appName = 'noAppointment', start = '_00h0q', end = '_23h3q'):
         verStrForm(appName + start + end) #verify string format
         firstIndex = self.conToInd(start)
-        lastIndex = self.conToInd(end) 
+        lastIndex = self.conToInd(end)
         #schedule appointment, throw exception if it will override an appointment
         try:
             indexReached = -1 #for except
@@ -34,7 +35,7 @@ class Day:
                     raise PreventOverride(appName + start + end, self.sch[i])
                 #schedule appointment in the quarter hour indexed by i
                 self.sch[i] = appName + start + end
-                indexReached = i 
+                indexReached = i
         except:
             #clear appointment times scheduled incorrectly (because of override)
             for i in range(firstIndex, indexReached + 1):
@@ -53,12 +54,12 @@ class Day:
             if (p.match(e)):
                 if e != lastMatch:
                     lastMatch = e
-                    listApp.append(e) 
+                    listApp.append(e)
 
         #check for empty list before returning
         if listApp == []:
             listApp = [Day.noApp]
-        
+
         #pass format test(s) and return
         for e in listApp:
             verStrForm(e)
@@ -98,7 +99,7 @@ class Day:
         #check precondition
         verTimeForm(time)
         #extract number of hours and number of quarter hours
-        p = re.compile('\d+') 
+        p = re.compile('\d+')
         values = p.findall(time) #get 2 element list [hour, quarter]
         index = 4*int(values[0]) + int(values[1]) #calculate index using hour and quarter
         assert 0<=index<len(self.sch)
@@ -120,12 +121,12 @@ def conToStr(appName = '0invalidName', start = -1.00, end = -1.00):
     assert (start >= 0 and end >= tStep)
     assert ((start % tStep == 0) and (end % tStep == 0))
     #adjust end time to match proper format
-    end = end - tStep 
+    end = end - tStep
     #convert times to string format and return complete string
     start = conTimeToStr(start)
     end = conTimeToStr(end)
     convertedString = appName + start + end
-    return convertedString 
+    return convertedString
 
 #pre: time is a non-negative multiple of tStep and within a day's time
 #post: return time in valid string format
@@ -134,17 +135,17 @@ def conTimeToStr(time = -1.00):
     assert time >= 0
     assert time % tStep == 0
     assert time <= 23.75
-    #convert time to string format 
+    #convert time to string format
     h = int(time) #extract hours
     if h < 10:
-        hours = '_0' + str(h) 
+        hours = '_0' + str(h)
     else:
         hours = '_' + str(h)
     q = (time - h) / tStep #extract quarter hours
     q = int(q)
     timeString = hours + 'h' + str(q) + 'q'
     #check string format and return
-    return timeString 
+    return timeString
 
 #pre: a valid string used for storing Day's appointments in a list
 #post: nothing unless string is invalid, in which case assert triggers
