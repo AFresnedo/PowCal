@@ -19,6 +19,7 @@ class AppTreeNode:
         self.date = date
         self.child = child
 
+# TODO looks like no precondition for nodes already existing
 class AppTree:
     "A tree holding AppTreeNodes."
     def __init__(self):
